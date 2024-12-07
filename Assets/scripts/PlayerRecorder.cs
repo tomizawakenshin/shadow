@@ -9,7 +9,15 @@ public class PlayerRecorder : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime;
+        // 最初のフレームでは timer を 0 に設定
+        if (recordedStates.Count == 0)
+        {
+            timer = 0f;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
 
         // 現在の状態を記録
         recordedStates.Add(new PlayerState(transform.position, transform.rotation, timer));

@@ -7,11 +7,16 @@ public class GhostPlayer : MonoBehaviour
     private int currentIndex = 0;
     private float startTime;
 
+    private bool isActive = true;
+    private int isActiveNumber = 0;
+
     public void StartReplay(List<PlayerState> states)
     {
         // 記録された状態をコピー
         playbackStates = new List<PlayerState>(states);
         startTime = Time.time;
+        currentIndex = 0;  // currentIndex をリセット
+        isActive = true;
     }
 
     void Update()
@@ -28,6 +33,12 @@ public class GhostPlayer : MonoBehaviour
 
         if (elapsedTime >= state.time)
         {
+            if (isActive)
+            {
+                isActive = false;
+                Debug.Log("Ghost replay is starting " + isActiveNumber);
+                isActiveNumber++;
+            }
             transform.position = state.position;
             transform.rotation = state.rotation;
             currentIndex++;
